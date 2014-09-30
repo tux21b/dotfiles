@@ -1,0 +1,9 @@
+[push]
+	default = simple
+[user]
+	name = Christoph Hack
+	email = christoph@tux21b.org
+[core]
+	editor = vim
+[merge]
+	tool = vimdiff
