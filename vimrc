@@ -130,14 +130,29 @@ set ttimeout
 set ttimeoutlen=10
 
 " easier clipboard
-set clipboard^=unnamed
-"set clipboard^=unnamedplus
+"set clipboard^=unnamed
+set clipboard=unnamed,unnamedplus
 
 "let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " longer history
 set history=1000
+
+" folding
+function! NeatFoldText()
+  let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+  let lines_count = v:foldend - v:foldstart + 1
+  let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
+  let foldchar = matchstr(&fillchars, 'fold:\zs.')
+  let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+  let foldtextend = lines_count_text . repeat(foldchar, 8)
+  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+  return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
+endfunction
+"set foldtext=NeatFoldText()
+set foldmethod=syntax
+set foldlevelstart=99
 
 
 " ==============================================================================
@@ -183,7 +198,6 @@ set nolist
 " airline options
 let g:airline_theme = 'molokai'
 let g:airline_enable_branch = 1
-let g:airline#extensions#tabline#enabled = 1
 
 if has("gui_running")
   set guifont=Powerline\ Consolas\ 10.5
@@ -200,6 +214,14 @@ else
   endif
   let g:airline_left_sep=''
   let g:airline_right_sep=''
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline#extensions#tabline#left_sep=''
+  let g:airline#extensions#tabline#left_alt_sep=''
+  if has("mouse_sgr")
+    set ttymouse=sgr
+  else
+    set ttymouse=xterm2
+  end
 endif
 if &term =~ '256color'
   set t_ut=

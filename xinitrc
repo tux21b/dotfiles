@@ -1,3 +1,4 @@
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 setxkbmap de
 xset s 3600 3600	
 feh --no-xinerama --bg-scale "$HOME/.wallpaper.png"
