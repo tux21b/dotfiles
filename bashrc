@@ -16,7 +16,9 @@ export GOPATH="$HOME/gopath"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/apps/rust/lib"
 PATH="$PATH:$HOME/apps/bin:$HOME/apps/go/bin:$GOPATH/bin:$HOME/apps/rust/bin"
 
-export PS1='\[\033[0;33m\]\w\[\033[0m\] \$ '
+source /usr/share/git/completion/git-prompt.sh
+export GIT_PS1_SHOWDIRTYSTATE=1
+export PS1='\[\033[0;33m\]\w\[\033[0m\]$(__git_ps1 " (%s)") \$ '
 
 # Always work in a tmux session if tmux is installed
 # if which tmux 2>&1 >/dev/null; then
